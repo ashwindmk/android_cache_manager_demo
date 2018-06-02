@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         /**
-         * Try out the following APIs
+         * Try out the following CacheManager APIs
          */
 
-        save()
+        //save()
 
         //saveStringResponse()
 
@@ -40,8 +40,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun save() {
+        // save string using CacheManager
         CacheManager.save(applicationContext, Store.FILE, "test.txt", "WooHoo! this is cached text")
+
+        // retrieve cached string from CacheManager
         var content = CacheManager.get(applicationContext, Store.FILE, "test.txt")
+
         if (content == null) {
             content = "Error"
         }
@@ -94,10 +98,10 @@ class MainActivity : AppCompatActivity() {
         val jsonArrayRequest = JsonArrayRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
                     try {
-                        // save json object
+                        // save json array
                         CacheManager.save(applicationContext, Store.FILE, "json_response.txt", response)
 
-                        // get cached json object
+                        // get cached json array
                         val res = CacheManager.getJsonArray(applicationContext, Store.FILE, "json_response.txt")
 
                         textView.text = res.toString()
@@ -114,7 +118,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun list() {
+        // get list of files in a directory
         val list: List<String> = CacheManager.list(applicationContext, Store.FILE)
+
         var stringBuilder = StringBuilder("")
         for (filename in list) {
             stringBuilder.append("\n").append(filename)
@@ -123,10 +129,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun delete() {
+        // delete a cached file
         CacheManager.delete(applicationContext, Store.FILE, "test.txt")
     }
 
     fun clear() {
+        // delete all cached files in specified directory
         CacheManager.delete(applicationContext, Store.FILE)
     }
 

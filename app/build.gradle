@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
     // cache manager
-    implementation 'org.bitbucket.ashwin_dinesh:android_cache_manager:1.0.0'
+    implementation 'org.bitbucket.ashwin_dinesh:android_cache_manager:1.0.1'
 
     // volley
     implementation 'com.android.volley:volley:1.1.0'

@@ -5,10 +5,7 @@ import android.os.Bundle
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyLog
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.android.volley.toolbox.*
 import com.ashwin.libraries.cachemanager.CacheManager
 import com.ashwin.libraries.cachemanager.Store
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         //saveJsonObjectResponse()
 
         //saveJsonArrayResponse()
+
+        //saveBitmap()
 
         //list()
 
@@ -115,6 +114,27 @@ class MainActivity : AppCompatActivity() {
         )
 
         queue.add(jsonArrayRequest)
+    }
+
+    fun saveBitmap() {
+        val queue = Volley.newRequestQueue(this)
+        val url = "https://firebasestorage.googleapis.com/v0/b/json-response-holder.appspot.com/o/movies%2Fcaptain_america_winter_soldier.jpg?alt=media&token=0af54da7-aaf0-4324-93d7-ce56a2b66aee"
+        val imageRequest = ImageRequest(url,
+                Response.Listener { response ->
+                    // save bitmap to CacheManager
+                    CacheManager.save(applicationContext, Store.FILE, "bitmap_image.png", response)
+
+                    // retrieve the bitmap from CacheManager
+                    val cachedBitmap = CacheManager.getBitmap(applicationContext, Store.FILE, "bitmap_image.png")
+
+                    imageView.setImageBitmap(cachedBitmap)
+                }, 2048, 2048, null,
+                Response.ErrorListener {
+                    textView.text = "Error loading image"
+                }
+        )
+
+        queue.add(imageRequest)
     }
 
     fun list() {
